@@ -7,16 +7,16 @@ import {
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex gap-4 p-10">
       <Button asChild>
-        <LoginLink>Sign in</LoginLink>
+        <LoginLink>Login</LoginLink>
       </Button>
       <Button asChild>
         <RegisterLink>Sign up</RegisterLink>
       </Button>
-      <Button asChild>
+      {/* <Button asChild>
         <LogoutLink>LOGOUT</LogoutLink>
-      </Button>
+      </Button> */}
     </div>
   );
 }
