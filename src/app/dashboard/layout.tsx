@@ -1,4 +1,3 @@
-import { DashboardNavigation } from "@/components/DashboardNavigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,6 +13,7 @@ import { CircleUser, MenuIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { DashboardNavigation } from "@/components/dashboard/DashboardNavigation";
 
 export default async function DashboardLayout({
   children,

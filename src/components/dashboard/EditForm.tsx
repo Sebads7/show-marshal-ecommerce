@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-
+import { UploadDropzone } from "@/lib/uploadthing";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -9,35 +9,47 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "../ui/card";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-
+} from "../ui/select";
+import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
 import { ChevronLeft, XIcon } from "lucide-react";
 import Link from "next/link";
-import { useFormState } from "react-dom";
-import { createProduct } from "@/app/actions";
-import { parseWithZod } from "@conform-to/zod";
-import { useForm } from "@conform-to/react";
-import { productSchema } from "@/lib/zodSchemas";
-import { UploadDropzone } from "@/lib/uploadthing";
-import { useState } from "react";
+import { SubmitButton } from "../SubmitButtons";
 import Image from "next/image";
 import { categories } from "@/lib/categories";
-import { SubmitButton } from "@/components/SubmitButtons";
+import { useState } from "react";
+import { useFormState } from "react-dom";
+import { useForm } from "@conform-to/react";
+import { editProduct } from "@/app/actions";
+import { parseWithZod } from "@conform-to/zod";
+import { productSchema } from "@/lib/zodSchemas";
+import { type $Enums } from "@prisma/client";
 
-export default function ProductCreateRoute() {
-  const [images, setImages] = useState<string[]>([]);
-  const [lastResult, action] = useFormState(createProduct, undefined);
+interface ProductProps {
+  data: {
+    id: string;
+    name: string;
+    description: string;
+    status: $Enums.ProductStatus;
+    price: number;
+    images: string[];
+    category: $Enums.Category;
+    isFeatured: boolean;
+  };
+}
+
+export function EditForm({ data }: ProductProps) {
+  const [images, setImages] = useState<string[]>(data.images);
+  const [lastResult, action] = useFormState(editProduct, undefined);
   const [form, fields] = useForm({
     lastResult,
 
@@ -52,24 +64,24 @@ export default function ProductCreateRoute() {
   const handleDelete = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
   };
-
   return (
     <>
       <form id={form.id} onSubmit={form.onSubmit} action={action}>
+        <input type="hidden" name="productId" value={data.id} id="id" />
         <div className="flex items-center gap-4">
           <Button variant={"outline"} size="icon">
             <Link href={"/dashboard/products"}>
               <ChevronLeft className="w-4 h-4" />
             </Link>
           </Button>
-          <h1 className="text-xl font-semibold tracking-tight">New Product</h1>
+          <h1 className="text-xl font-semibold tracking-tight">Edit Product</h1>
         </div>
 
         <Card className="mt-5">
           <CardHeader>
             <CardTitle>Product Details</CardTitle>
             <CardDescription>
-              In this form you can create your product
+              In this you can update your product
             </CardDescription>
           </CardHeader>
 
@@ -81,7 +93,7 @@ export default function ProductCreateRoute() {
                   type="text"
                   key={fields.name.key}
                   name={fields.name.name}
-                  defaultValue={fields.name.initialValue}
+                  defaultValue={data.name}
                   className="w-full "
                   placeholder="Product Name"
                 />
@@ -94,7 +106,7 @@ export default function ProductCreateRoute() {
                   placeholder="Write your description right here..."
                   key={fields.description.key}
                   name={fields.description.name}
-                  defaultValue={fields.description.initialValue}
+                  defaultValue={data.description}
                 />
                 <p className="text-red-500">{fields.description.errors}</p>
               </div>
@@ -103,7 +115,7 @@ export default function ProductCreateRoute() {
                 <Input
                   key={fields.price.key}
                   name={fields.price.name}
-                  defaultValue={fields.price.initialValue}
+                  defaultValue={data.price}
                   placeholder="$55"
                   type="number"
                 />
@@ -115,7 +127,7 @@ export default function ProductCreateRoute() {
                 <Switch
                   key={fields.isFeatured.key}
                   name={fields.isFeatured.name}
-                  defaultValue={fields.isFeatured.initialValue}
+                  defaultChecked={data.isFeatured}
                 />
                 <p className="text-red-500">{fields.isFeatured.errors}</p>
               </div>
@@ -125,7 +137,7 @@ export default function ProductCreateRoute() {
                 <Select
                   key={fields.status.key}
                   name={fields.status.name}
-                  defaultValue={fields.status.initialValue}
+                  defaultValue={data.status}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select Status" />
@@ -145,7 +157,7 @@ export default function ProductCreateRoute() {
                 <Select
                   key={fields.category.key}
                   name={fields.category.name}
-                  defaultValue={fields.category.initialValue}
+                  defaultValue={data.category}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a Category" />
@@ -210,7 +222,7 @@ export default function ProductCreateRoute() {
             </div>
           </CardContent>
           <CardFooter>
-            <SubmitButton buttonName="Create Product" />
+            <SubmitButton buttonName="Update Product" />
           </CardFooter>
         </Card>
       </form>
