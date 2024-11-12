@@ -20,7 +20,7 @@ async function getData() {
 
 export async function Hero() {
   const data = await getData();
-  console.log(data);
+  // console.log(data);
   return (
     <Carousel>
       <CarouselContent>
@@ -30,7 +30,8 @@ export async function Hero() {
               <Image
                 src={item.imageString}
                 alt="banner image"
-                fill
+                width={2000}
+                height={2000}
                 className="object-cover w-full h-full rounded-xl"
               />
 
