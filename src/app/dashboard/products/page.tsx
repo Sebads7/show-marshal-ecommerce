@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { unstable_noStore as noStore } from "next/cache";
 import {
   Card,
   CardContent,
@@ -38,6 +39,7 @@ async function getData() {
 }
 
 export default async function ProductsPage() {
+  noStore();
   const data = await getData();
 
   return (

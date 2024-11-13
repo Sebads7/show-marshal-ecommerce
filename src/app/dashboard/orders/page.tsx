@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { unstable_noStore as noStore } from "next/cache";
+
 import {
   Table,
   TableBody,
@@ -42,6 +44,7 @@ async function getData() {
 }
 
 export default async function OrderPage() {
+  noStore();
   const data = await getData();
   return (
     <Card>

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { unstable_noStore as noStore } from "next/cache";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +21,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  noStore();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

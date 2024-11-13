@@ -1,11 +1,13 @@
 import prisma from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function GET() {
   const { getUser } = getKindeServerSession();
 
   const user = await getUser();
+  noStore();
 
   if (!user || user === null || !user.id) {
     throw new Error("Unauthorized");
