@@ -1,0 +1,8 @@
+In this project I'm using:
+
+Neon for managing serverless postgres databases. 
+Uploadthing is used to store data, such as images. 
+Prisma is a data modeling language to work and interact with databases. 
+Kinde-Auth. is used to authenticate example... using google authentication 
+Redis-Upstash. is a database in which the product data is stored. 
+Stripe. 

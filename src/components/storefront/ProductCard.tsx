@@ -8,6 +8,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 import Image from "next/image";
+import { Skeleton } from "../ui/skeleton";
 
 interface ProductItem {
   items: {
@@ -54,6 +55,19 @@ export function ProductCard({ items }: ProductItem) {
           <Link href={`/product/${items.id}`}>Learn More!</Link>
         </Button>
       </div>
+    </div>
+  );
+}
+
+export function LoadingProductCard() {
+  return (
+    <div className="flex flex-col">
+      <Skeleton className="w-full h-80" />
+      <div className="flex flex-col mt-2 gap-y-2">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="w-full h-6" />
+      </div>
+      <Skeleton className="w-full h-10 mt-5" />
     </div>
   );
 }

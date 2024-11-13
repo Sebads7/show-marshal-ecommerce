@@ -1,5 +1,7 @@
+import { addItem } from "@/app/actions";
 import { FeaturedProduct } from "@/components/storefront/FeaturedProducts";
 import ImageSlider from "@/components/storefront/ImageSlider";
+import { ShoppingBagButton } from "@/components/SubmitButtons";
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/db";
 import { ShoppingBag, StarIcon } from "lucide-react";
@@ -31,6 +33,7 @@ export default async function ProductIdRoute({
   params: { id: string };
 }) {
   const data = await getData(params.id);
+  const addProduct = addItem.bind(null, data.id);
   return (
     <>
       <div className="grid md:grid-cols-2 gap-6 items-start lg:gap-x-24 py-6">
@@ -50,9 +53,9 @@ export default async function ProductIdRoute({
 
           <p className="text-base text-gray-600 mt-6">{data.description}</p>
 
-          <Button size="lg" className="w-full mt-6">
-            <ShoppingBag className="mr-4 h-5 w-5" /> Add to bag
-          </Button>
+          <form action={addProduct}>
+            <ShoppingBagButton />
+          </form>
         </div>
       </div>
 
