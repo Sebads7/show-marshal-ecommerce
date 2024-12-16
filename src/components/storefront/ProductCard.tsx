@@ -22,9 +22,9 @@ interface ProductItem {
 
 export function ProductCard({ items }: ProductItem) {
   return (
-    <div className="w-fit flex  mx-auto  rounder-lg mb-10">
-      <div className="w-[28rem]">
-        <Carousel className=" mx-auto">
+    <div className="w-full mx-auto  rounded-lg mb-10">
+      <div className="w-full">
+        <Carousel className=" mx-auto w-full">
           <CarouselContent>
             {items.images.map((image, index) => (
               <CarouselItem key={index}>

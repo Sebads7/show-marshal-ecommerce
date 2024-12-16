@@ -3,6 +3,7 @@
 import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
 import { Loader2, ShoppingBag } from "lucide-react";
+import { Cart } from "@/lib/interfaces";
 
 interface SubmitButtonProps {
   buttonName: string;
@@ -39,7 +40,7 @@ export function ShoppingBagButton() {
   const { pending } = useFormStatus();
 
   return (
-    <div>
+    <>
       {pending ? (
         <Button disabled size="lg" className="w-full mt-6">
           <Loader2 className="mr-4 h-5 w-5 animate-spin" /> Please Wait
@@ -49,7 +50,7 @@ export function ShoppingBagButton() {
           <ShoppingBag className="mr-4 h-5 w-5" /> Add to bag
         </Button>
       )}
-    </div>
+    </>
   );
 }
 
@@ -73,7 +74,7 @@ export function RemoveItemButton() {
   );
 }
 
-export function CheckOutButton() {
+export function CheckOutButton({ checkOut }: { checkOut: any }) {
   const { pending } = useFormStatus();
 
   return (
@@ -83,9 +84,11 @@ export function CheckOutButton() {
           <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Please Wait
         </Button>
       ) : (
-        <Button type="submit" size={"lg"} className="w-full mt-5">
-          Checkout
-        </Button>
+        <form action={checkOut}>
+          <Button type="submit" size={"lg"} className="w-full mt-5">
+            Checkout
+          </Button>
+        </form>
       )}
     </>
   );

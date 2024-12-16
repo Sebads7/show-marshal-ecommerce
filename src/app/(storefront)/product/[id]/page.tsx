@@ -7,6 +7,7 @@ import prisma from "@/lib/db";
 import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 async function getData(productId: string) {
   const data = await prisma.product.findUnique({
@@ -35,7 +36,11 @@ export default async function ProductIdRoute({
 }) {
   noStore();
   const data = await getData(params.id);
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   const addProduct = addItem.bind(null, data.id);
+
   return (
     <>
       <div className="grid md:grid-cols-2 gap-6 items-start lg:gap-x-24 py-6">
@@ -54,7 +59,6 @@ export default async function ProductIdRoute({
           </div>
 
           <p className="text-base text-gray-600 mt-6">{data.description}</p>
-
           <form action={addProduct}>
             <ShoppingBagButton />
           </form>

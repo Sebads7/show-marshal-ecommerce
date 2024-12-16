@@ -97,7 +97,7 @@ const page = async ({ params }: { params: { name: string } }) => {
     <section>
       <h1 className="font-semibold text-3xl my-5">{data.title}</h1>
 
-      <div className="w-full   flex gap-10">
+      <div className="w-full  grid grid-cols-3  gap-10">
         {data.data.map((item) => (
           <ProductCard key={item.id} items={item} />
         ))}

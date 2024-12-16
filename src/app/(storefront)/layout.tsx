@@ -1,5 +1,5 @@
 import Footer from "@/components/storefront/Footer";
-import { Navbar } from "@/components/storefront/Navbar";
+import { Navbar } from "@/components/storefront/Navbar/Navbar";
 
 export default function StoreFrontLayout({
   children,
